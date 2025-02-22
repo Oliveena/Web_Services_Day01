@@ -1,0 +1,36 @@
+:root {
+    --champagne-pink: #eddcd2ff;
+    --linen: #fff1e6ff;
+    --misty-rose: #fde2e4ff;
+    --mimi-pink: #fad2e1ff;
+    --light-cyan: #c5deddff;
+    --mint-cream: #dbe7e4ff;
+    --isabelline: #f0efebff;
+    --alice-blue: #d6e2e9ff;
+    --columbia-blue: #bcd4e6ff;
+    --powder-blue: #99c1deff;
+}
+
+body {
+    background-color: var(--powder-blue);
+    padding: 0;
+    margin: 0 auto;
+}
+
+div {
+    margin: var(--isabelline);
+}
+
+#centeredContent {
+    width: 100vw;
+    background-color: var(--alice-blue);
+}
+
+#listPane,
+#viewAddEditPane {
+    background-color: var(--linen);
+    border-color: var(--misty-rose) 1px solid;
+    border-radius: 10%;
+    max-width: 50vw;
+    display: inline-table;
+}

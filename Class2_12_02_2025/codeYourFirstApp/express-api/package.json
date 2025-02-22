@@ -1,0 +1,26 @@
+{
+  "name": "express-api",
+  "version": "1.0.0",
+  "description": "\"Node.js and Express REST API\"",
+  "keywords": [
+    "node.js",
+    "express",
+    "rest",
+    "api"
+  ],
+  "license": "ISC",
+  "author": "Ana Tara (tutorial by Tania Rascia)",
+  "type": "module", 
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "mysql": "^2.18.1",
+    "uuid": "^11.0.5"
+  }
+}

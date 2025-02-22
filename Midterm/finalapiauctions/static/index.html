@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction API Midterm</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1>Auctions API with Express and Sequelize</h1>
+    <h4>Add A New Auction</h4>
+    <div id="addItemForm">
+        <div class="form-group">
+            <label for="itemCode">Item Code</label>
+            <input type="text" class="form-control" id="itemCode" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="sellerEmail">Seller Email</label>
+            <input type="email" class="form-control" id="sellerEmail" required>
+        </div>
+        <button type="submit" class="btn btn-info">Place item for auction</button>
+    </div>
+    <!-- Message Box -->
+    <div id="messageBox" class="mt-3" style="display:none;"></div>
+</div>
+
+<div class="container mt-5">
+    <h2>Current Auctions</h2>
+    <div>
+        <button class="btn btn-secondary" id="sortByCode">Sort by Code</button>
+        <button class="btn btn-secondary" id="sortByDescription">Sort by Description</button>
+        <button class="btn btn-secondary" id="sortByLastBid">Sort by Last Bid</button>
+    </div>
+    <table class="table table-bordered" id="auctionsTable">
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>Seller Email</th>
+                <th>Last Bid</th>
+                <th>Last Bidder Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--TABLE BODY will be populated with actions-->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // array for storting acutions from db
+    var auctionsData = [];
+
+    // get auctions
+    function loadAuctions() {
+        $.ajax({
+            url: 'http://localhost:3000/api/auctions',  
+            type: 'GET',
+            success: function(response) {
+                // trying to store
+                auctionsData = response;  
+                renderAuctions(auctionsData);
+            },
+            error: function(xhr, status, error) {
+                alert('Error fetching auctions: ' + error);
+            }
+        });
+    }
+
+    // populating the table
+    function renderAuctions(data) {
+        $('#auctionsTable tbody').empty();
+
+        // looping through table contents
+        data.forEach(function(auction) {
+            var row = `<tr>
+                <td>${auction.itemCode}</td>
+                <td>${auction.itemDesc}</td>
+                <td>${auction.sellerEmail}</td>
+                <td>${auction.lastBid ? auction.lastBid : 'No bids yet'}</td>
+                <td>${auction.lastBidderEmail ? auction.lastBidderEmail : 'N/A'}</td>
+            </tr>`;
+            $('#auctionsTable tbody').append(row);
+        });
+    }
+
+    // sorting the auctions by bid itemCode
+    function sortByItemCode() {
+        const sorted = [...auctionsData].sort((a, b) => a.itemCode.localeCompare(b.itemCode));
+        renderAuctions(sorted);
+    }
+
+    // sorting the auctions by bid description
+    function sortByDescription() {
+        const sorted = [...auctionsData].sort((a, b) => a.itemDesc.localeCompare(b.itemDesc));
+        renderAuctions(sorted);
+    }
+
+    // sorting the auctions by bid
+    function sortByLastBid() {
+        const sorted = [...auctionsData].sort((a, b) => {
+            const bidA = a.lastBid ? parseFloat(a.lastBid) : 0;
+            const bidB = b.lastBid ? parseFloat(b.lastBid) : 0;
+            return bidB - bidA;  // sorting in a descending order
+        });
+        renderAuctions(sorted);
+    }
+
+    $(document).ready(function() {
+        // onload
+        loadAuctions();
+
+        // sorting buttons
+        $('#sortByCode').click(sortByItemCode);
+        $('#sortByDescription').click(sortByDescription);
+        $('#sortByLastBid').click(sortByLastBid);
+    });
+
+    // adding a new auction
+    $('#addItemForm').submit(function(event) {
+        event.preventDefault();
+
+        var itemCode = $('#itemCode').val();
+        var description = $('#description').val();
+        var sellerEmail = $('#sellerEmail').val();
+
+        $.ajax({
+            // connect to server
+            url: 'http://localhost:3000/api/auctions',  
+            type: 'POST',
+            data: {
+                itemCode: itemCode,
+                itemDesc: description,
+                sellerEmail: sellerEmail
+            },
+            success: function(response) {
+                $('#messageBox').html('<div class="alert alert-success">Item added successfully!</div>').show();
+                // refresh fields
+                $('#description').val('');
+                $('#itemCode').val(''); 
+                $('#sellerEmail').val(''); 
+
+                // refresh auctions table
+                loadAuctions();
+            },
+            error: function(xhr, status, error) {
+                $('#messageBox').html('<div class="alert alert-danger">Error: ' + error + '</div>').show();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

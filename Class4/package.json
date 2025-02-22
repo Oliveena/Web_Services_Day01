@@ -1,0 +1,27 @@
+{
+  "name": "airport_exercice",
+  "version": "1.0.0",
+  "description": "REST API, airports",
+  "keywords": [
+    "REST",
+    "API"
+  ],
+  "license": "ISC",
+  "author": "Anastassia Tarassova",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "js-logger": "^1.6.1",
+    "mysql": "^2.18.1",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

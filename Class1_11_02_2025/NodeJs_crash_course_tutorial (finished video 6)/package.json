@@ -1,0 +1,18 @@
+{
+  "name": "nodejs_crash_course_tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Ana Tarassove (from a tutorial)",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "lodash": "^4.17.21"
+  }
+}

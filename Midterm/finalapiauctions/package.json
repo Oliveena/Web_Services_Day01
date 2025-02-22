@@ -1,0 +1,21 @@
+{
+  "name": "finalapiauctions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Anastassia Tarassova",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "debug": "^4.4.0",
+    "init": "^0.1.2",
+    "npmlog": "^7.0.1",
+    "sequelize-cli": "^6.6.2",
+    "validator": "^13.12.0"
+  }
+}
